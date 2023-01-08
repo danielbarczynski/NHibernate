@@ -20,6 +20,7 @@ namespace NHibernateExample
         {
             string connectionString = "Data Source=(localdb)\\learning; Initial Catalog=learning; Integrated Security=true";
             var config = new Configuration();
+
             config.DataBaseIntegration(d =>
             {
                 d.ConnectionString = connectionString;
@@ -29,11 +30,25 @@ namespace NHibernateExample
 
             config.AddAssembly(Assembly.GetExecutingAssembly());
             var sessionFactory = config.BuildSessionFactory();
+
             using (var session = sessionFactory.OpenSession())
             {
-                var car = new Car() { Brand = "Audi", Model = "R8" };
-                session.Save(car);
+                // add
+                //var car = new Car() { Brand = "Audi", Model = "R8" };
+                //session.Save(car); // every time creates new car
 
+                // delete
+                //var getCar = session.Get<Car>(2);
+                //session.Delete(getCar);
+                //session.Flush();
+
+                //update
+                //session.BeginTransaction(); // without transaction it doesn't save
+                //var updateCar = new Car() { Id = 3, Brand = "Audi", Model = "R7" };
+                //session.SaveOrUpdate(updateCar);
+                //session.Transaction.Commit();
+
+                // read
                 var cars = session.CreateCriteria<Car>().List<Car>();
                 cars.ToList().ForEach(x => Console.WriteLine(x.Model));
             }
