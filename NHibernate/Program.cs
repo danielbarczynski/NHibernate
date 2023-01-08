@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NHibernate.Cfg;
 using NHibernate.Dialect;
+using NHibernate.Dialect.Function;
 using NHibernate.Driver;
 using NHibernateExample.Models;
 
@@ -32,6 +33,9 @@ namespace NHibernateExample
             {
                 var car = new Car() { Brand = "Audi", Model = "R8" };
                 session.Save(car);
+
+                var cars = session.CreateCriteria<Car>().List<Car>();
+                cars.ToList().ForEach(x => Console.WriteLine(x.Model));
             }
         }
     }
